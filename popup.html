@@ -3,90 +3,117 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>QuickTools Pro</title>
+<title>NEXA Tools</title>
 <link rel="stylesheet" href="popup.css">
 </head>
 <body>
 <header class="top">
-  <div class="brand">
-    <div class="logo">Q</div>
-    <div><h1>QuickTools</h1><span>Pro</span></div>
-  </div>
+  <div class="brand"><div class="logo"><img src="icons/icon128.png" alt="NEXA"></div><div><h1>NEXA Tools</h1><span>SMART BROWSER TOOLKIT • v7.3.0</span></div></div>
   <button class="iconbtn" id="copyPage" title="Copy page title and URL">
-    <svg viewBox="0 0 24 24"><path d="M9 9h10v10H9z"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg>
+    <svg viewBox="0 0 24 24"><rect x="8" y="8" width="11" height="11" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v1"/></svg>
   </button>
 </header>
-
-<div id="notice" class="notice"></div>
+<div id="notice" class="notice" role="status"></div>
 
 <nav>
-  <button class="nav active" data-page="home">Tools</button>
-  <button class="nav" data-page="text">Text</button>
-  <button class="nav" data-page="dev">Developer</button>
-  <button class="nav" data-page="saved">Saved</button>
+  <button class="nav active" data-page="home">Home</button>
+  <button class="nav" data-page="display">Display</button>
+  <button class="nav" data-page="tools">Tools</button>
+  <button class="nav" data-page="qr">QR</button>
 </nav>
 
 <main>
 <section id="home" class="page active">
-  <div class="section-title">Browser</div>
+  <div class="section-title">Browser Tools</div>
   <div class="toolgrid">
-    <button class="tool" id="screenshot"><span class="svgicon"><svg viewBox="0 0 24 24"><path d="M4 7h3l1.5-2h7L17 7h3v12H4z"/><circle cx="12" cy="13" r="3.5"/></svg></span><b>Screenshot</b><small>Visible tab</small></button>
-    <button class="tool" id="cleanurl"><span class="svgicon"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.1.1l2-2a5 5 0 0 0-7.1-7.1l-1.2 1.2"/><path d="M14 11a5 5 0 0 0-7.1-.1l-2 2A5 5 0 0 0 12 20l1.2-1.2"/></svg></span><b>Clean URL</b><small>Remove trackers</small></button>
-    <button class="tool" id="duplicates"><span class="svgicon"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="12" height="12" rx="2"/><path d="M8 20h10a2 2 0 0 0 2-2V8"/></svg></span><b>Duplicate tabs</b><small>Close copies</small></button>
-    <button class="tool" id="savehtml"><span class="svgicon"><svg viewBox="0 0 24 24"><path d="M5 3h11l3 3v15H5z"/><path d="M8 3v6h8V3M9 17h6"/></svg></span><b>Save page</b><small>Download HTML</small></button>
-    <button class="tool" id="print"><span class="svgicon"><svg viewBox="0 0 24 24"><path d="M7 9V3h10v6"/><path d="M6 18H4V10h16v8h-2"/><path d="M7 14h10v7H7z"/></svg></span><b>Print / PDF</b><small>Current page</small></button>
-    <button class="tool" id="selectionSearch"><span class="svgicon"><svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg></span><b>Search text</b><small>Selected text</small></button>
-    <button class="tool" id="translate"><span class="svgicon"><svg viewBox="0 0 24 24"><path d="M4 5h9M8.5 3v2M5 8c1.5 4 4 6.5 7 8"/><path d="M12 5c-1 3-3 6-6 8"/><path d="M15 13h5l-3 8-2-5-2 5z"/></svg></span><b>Translate</b><small>Selected text</small></button>
+    <button class="tool" id="cleanurl"><span class="bigicon">⌁</span><b>Clean URL</b><small>Remove tracking parameters</small></button>
+    <button class="tool" id="duplicates"><span class="bigicon">▤</span><b>Duplicate Tabs</b><small>Close duplicate pages</small></button>
+    <button class="tool" id="savehtml"><span class="bigicon">⇩</span><b>Save Page</b><small>Download current HTML</small></button>
+    <button class="tool" id="print"><span class="bigicon">▤</span><b>Print / PDF</b><small>Open print dialog</small></button>
+    <button class="tool" id="selectionSearch"><span class="bigicon">⌕</span><b>Search Text</b><small>Search selected text</small></button>
   </div>
-
-  <div class="quickrow">
-    <button id="copyUrl" class="widebtn">Copy URL</button>
-    <button id="copyTitle" class="widebtn">Copy title</button>
-  </div>
+  <div class="quickrow"><button id="copyUrl" class="widebtn">Copy URL</button><button id="copyTitle" class="widebtn">Copy title</button></div>
 </section>
 
-<section id="text" class="page">
-  <div class="section-title">Text tools</div>
-  <textarea id="textBox" class="editor" placeholder="Paste text here..."></textarea>
-  <div class="actions">
-    <button id="upper">UPPER</button><button id="lower">lower</button>
-    <button id="title">Title Case</button><button id="spaces">Clean spaces</button>
-    <button id="sortLines">Sort lines</button><button id="uniqueLines">Unique lines</button>
-    <button id="copy">Copy</button><button id="clear">Clear</button>
+
+<section id="display" class="page">
+  <div class="section-title">Display</div>
+
+  <div class="card">
+    <div class="labelrow"><b>Brightness</b><span id="brightValue">100%</span></div>
+    <input id="brightness" type="range" min="40" max="160" value="100" aria-label="Page brightness">
+    <div class="presetrow"><button data-bright="70">70%</button><button data-bright="100">100%</button><button data-bright="130">130%</button><button data-bright="150">150%</button></div>
   </div>
-  <div id="count" class="count">0 words · 0 characters</div>
+
+  <div class="card">
+    <div class="labelrow"><b>Page color</b><span id="colorOpacityValue">0%</span></div>
+    <div class="picker-line">
+      <input id="pageColor" type="color" value="#ffffff" aria-label="Choose page color">
+      <input id="pageColorHex" class="color-hex" type="text" value="#FFFFFF" maxlength="7" spellcheck="false" aria-label="Page color hex value">
+      <button id="pickColor" class="widebtn">Pick</button>
+    </div>
+    <div class="color-tools"><button id="clearColor" class="linkbtn">Clear color</button><span id="colorPickStatus">HEX #FFFFFF</span></div>
+    <div class="labelrow compact-label"><b>Color strength</b><span id="colorStrengthValue">0%</span></div>
+    <input id="colorOpacity" type="range" min="0" max="45" value="0" aria-label="Page color strength">
+  </div>
+
+  <div class="card">
+    <div class="labelrow"><b>Audio boost</b><span id="volumeValue">100%</span></div>
+    <input id="volume" type="range" min="0" max="2000" value="100" step="1" aria-label="Audio boost up to 2000 percent">
+    <div class="presetrow"><button data-vol="0">Mute</button><button data-vol="100">100%</button><button data-vol="500">500%</button><button data-vol="1000">1000%</button><button data-vol="1500">1500%</button><button data-vol="2000">2000%</button></div>
+    <div class="boostmeter"><span id="boostFill"></span></div>
+    <div class="boostmeta"><span id="boostStatus">Ready</span><span>MAX 2000%</span></div>
+  </div>
+
+  <div class="display-actions"><button class="widebtn" id="resetDisplay">Reset</button><button class="primary" id="applyAllDisplay">Apply</button></div>
 </section>
 
-<section id="dev" class="page">
-  <div class="section-title">Developer tools</div>
-  <div class="toolgrid">
-    <button class="tool" id="pageInfo"><span class="svgicon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 10v6M12 7h.01"/></svg></span><b>Page info</b><small>Title, URL, size</small></button>
-    <button class="tool" id="source"><span class="svgicon"><svg viewBox="0 0 24 24"><path d="m8 8-4 4 4 4M16 8l4 4-4 4M14 5l-4 14"/></svg></span><b>View source</b><small>Open page HTML</small></button>
-    <button class="tool" id="jsonFormat"><span class="svgicon"><svg viewBox="0 0 24 24"><path d="M7 4H5v16h2M17 4h2v16h-2M10 8h4M10 12h4M10 16h4"/></svg></span><b>Format JSON</b><small>Validate & pretty-print</small></button>
-    <button class="tool" id="urlDecode"><span class="svgicon"><svg viewBox="0 0 24 24"><path d="M5 5h14v14H5z"/><path d="M8 12h8M12 8v8"/></svg></span><b>URL decode</b><small>Decode selected text</small></button>
-    <button class="tool" id="base64"><span class="svgicon"><svg viewBox="0 0 24 24"><path d="M4 7h16v10H4z"/><path d="M8 10v4M12 10v4M16 10v4"/></svg></span><b>Base64</b><small>Encode / decode</small></button>
-    <button class="tool" id="copyPageDev"><span class="svgicon"><svg viewBox="0 0 24 24"><path d="M9 9h10v10H9z"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg></span><b>Copy page data</b><small>Title + URL</small></button>
+
+
+<section id="tools" class="page">
+  <div class="section-title">Tools</div>
+  <div class="mini-grid">
+    <button class="mini-tool" id="pageInfo"><span>ⓘ</span><b>Page Info</b><small>Inspect page details</small></button>
+    <button class="mini-tool" id="source"><span>&lt;/&gt;</span><b>Source</b><small>Open page source</small></button>
+    <button class="mini-tool" id="jsonFormat"><span>{ }</span><b>JSON</b><small>Format JSON</small></button>
+    <button class="mini-tool" id="urlDecode"><span>%</span><b>URL Decode</b><small>Decode text</small></button>
+    <button class="mini-tool" id="base64"><span>64</span><b>Base64</b><small>Encode / decode</small></button>
+    <button class="mini-tool" id="copyPageDev"><span>⧉</span><b>Page Data</b><small>Copy title + URL</small></button>
   </div>
-  <div class="devbox">
-    <div class="devhead"><b>Developer input</b><button id="clearDev" class="linkbtn">Clear</button></div>
-    <textarea id="devBox" class="editor small" placeholder="Paste JSON, URL-encoded text, or normal text here..."></textarea>
+  <div class="compact-card">
+    <div class="devhead"><b>Developer</b><button id="clearDev" class="linkbtn">Clear</button></div>
+    <textarea id="devBox" class="editor small" placeholder="Paste JSON, URL-encoded text, or normal text…"></textarea>
     <div class="actions"><button id="encode64">Base64 encode</button><button id="decode64">Base64 decode</button><button id="decodeUrl">URL decode</button><button id="formatJson">Format JSON</button></div>
   </div>
+  <div class="compact-card image-card">
+    <div class="imagebar"><div><b id="imageCount">Ready to scan</b><small id="imageHint">Find images on the current page</small></div><button class="primary" id="scanImages">Scan</button></div>
+    <div class="imageactions"><button class="widebtn" id="downloadAllImages">Download all</button><button class="widebtn" id="downloadSelectedImages">Download selected</button></div>
+    <div id="imageList" class="imagelist"></div>
+  </div>
 </section>
 
-<section id="saved" class="page">
-  <div class="card">
-    <div class="cardhead"><b>Clipboard history</b><button id="clearClip" class="linkbtn">Clear</button></div>
-    <div id="clips"></div>
-  </div>
-  <div class="card">
-    <div class="cardhead"><b>Quick notes</b><button id="saveNote" class="linkbtn">Save</button></div>
-    <textarea id="notes" class="notes" placeholder="Write notes..."></textarea>
+<section id="qr" class="page">
+  <div class="section-title">QR Code</div>
+  <div class="qr-card card">
+    <div class="qr-head">
+      <div><b>QR generator</b><small>Works offline. Nothing is uploaded.</small></div>
+      <button id="qrFromPage" class="linkbtn">Current URL</button>
+    </div>
+    <textarea id="qrText" class="editor qr-input" placeholder="Enter text or paste a URL…"></textarea>
+    <div class="qr-options">
+      <label>Size <select id="qrSize"><option>192</option><option selected>256</option><option>320</option><option>512</option></select></label>
+      <span class="qr-note">Black &amp; white</span>
+    </div>
+    <div class="qr-preview-wrap"><div id="qrPreview" class="qr-preview"><span>Enter text to generate</span></div></div>
+    <div class="qr-actions"><button class="primary" id="generateQR">Generate</button><button class="widebtn" id="downloadQR">Download</button><button class="widebtn" id="copyQR">Copy</button></div>
   </div>
 </section>
+
+
+
 </main>
-
-<footer>QuickTools Pro · v3</footer>
+<footer>NEXA Tools · v7.3.0</footer>
+<script src="qrcode-local.js"></script>
 <script src="popup.js"></script>
 </body>
 </html>
