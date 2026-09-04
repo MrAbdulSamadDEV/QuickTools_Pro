@@ -2,18 +2,29 @@
   "manifest_version": 3,
   "name": "NEXA Tools",
   "short_name": "NEXA",
-  "version": "7.3.0",
-  "description": "A clean monochrome all-in-one browser toolkit with audio boost, display controls, QR, developer and image tools.",
+  "version": "8.0.0",
+  "description": "All-in-one browser toolkit: Full Page & Custom Area screenshots, screen recording with audio, all images & icons downloader, QR code scanner & generator, 2000% audio boost, and developer tools.",
   "permissions": [
     "tabs",
     "activeTab",
     "scripting",
     "downloads",
-    "storage"
+    "storage",
+    "sidePanel",
+    "tabCapture"
   ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
   "action": {
-    "default_title": "QuickTools Pro",
+    "default_title": "NEXA Tools",
     "default_popup": "popup.html"
+  },
+  "side_panel": {
+    "default_path": "popup.html"
   },
   "icons": {
     "16": "icons/icon16.png",

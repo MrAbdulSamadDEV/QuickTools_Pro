@@ -8,36 +8,236 @@
 </head>
 <body>
 <header class="top">
-  <div class="brand"><div class="logo"><img src="icons/icon128.png" alt="NEXA"></div><div><h1>NEXA Tools</h1><span>SMART BROWSER TOOLKIT • v7.3.0</span></div></div>
-  <button class="iconbtn" id="copyPage" title="Copy page title and URL">
-    <svg viewBox="0 0 24 24"><rect x="8" y="8" width="11" height="11" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v1"/></svg>
-  </button>
+  <div class="brand">
+    <div class="logo"><img src="icons/icon128.png" alt="NEXA"></div>
+    <div><h1>NEXA Tools</h1><span>SMART BROWSER TOOLKIT • v8.0.0</span></div>
+  </div>
+  <div style="display:flex;gap:6px;">
+    <button class="iconbtn" id="openSidePanel" title="Open in Side Panel">
+      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/></svg>
+    </button>
+    <button class="iconbtn" id="copyPage" title="Copy page title and URL">
+      <svg viewBox="0 0 24 24"><rect x="8" y="8" width="11" height="11" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v1"/></svg>
+    </button>
+  </div>
 </header>
 <div id="notice" class="notice" role="status"></div>
 
 <nav>
   <button class="nav active" data-page="home">Home</button>
+  <button class="nav" data-page="capture">Capture</button>
+  <button class="nav" data-page="media">Media</button>
   <button class="nav" data-page="display">Display</button>
-  <button class="nav" data-page="tools">Tools</button>
+  <button class="nav" data-page="tools">Dev</button>
   <button class="nav" data-page="qr">QR</button>
 </nav>
 
 <main>
+<!-- HOME PAGE -->
 <section id="home" class="page active">
   <div class="section-title">Browser Tools</div>
   <div class="toolgrid">
     <button class="tool" id="cleanurl"><span class="bigicon">⌁</span><b>Clean URL</b><small>Remove tracking parameters</small></button>
     <button class="tool" id="duplicates"><span class="bigicon">▤</span><b>Duplicate Tabs</b><small>Close duplicate pages</small></button>
     <button class="tool" id="savehtml"><span class="bigicon">⇩</span><b>Save Page</b><small>Download current HTML</small></button>
-    <button class="tool" id="print"><span class="bigicon">▤</span><b>Print / PDF</b><small>Open print dialog</small></button>
+    <button class="tool" id="print"><span class="bigicon">🖨</span><b>Print / PDF</b><small>Open print dialog</small></button>
     <button class="tool" id="selectionSearch"><span class="bigicon">⌕</span><b>Search Text</b><small>Search selected text</small></button>
+    <button class="tool" id="homePip"><span class="bigicon">⧉</span><b>Float Video (PiP)</b><small>Picture-in-picture player</small></button>
+    <button class="tool" id="homeDarkMode"><span class="bigicon">◑</span><b>Smart Dark Mode</b><small>High contrast dark theme</small></button>
+    <button class="tool" id="homeAreaScreenshot"><span class="bigicon">✂</span><b>Custom Screenshot</b><small>Select &amp; crop area</small></button>
   </div>
   <div class="quickrow"><button id="copyUrl" class="widebtn">Copy URL</button><button id="copyTitle" class="widebtn">Copy title</button></div>
 </section>
 
+<!-- CAPTURE PAGE (Screenshots & Video Recording) -->
+<section id="capture" class="page">
+  <div class="section-title">Screenshots &amp; Screen Recording</div>
 
+  <!-- Screenshot Card -->
+  <div class="card">
+    <div class="labelrow"><b>Screenshots</b><span>PNG HD</span></div>
+    <div class="toolgrid-3">
+      <button class="tool compact-tool" id="btnVisibleScreenshot">
+        <span class="bigicon">📷</span><b>Visible</b><small>Current view</small>
+      </button>
+      <button class="tool compact-tool" id="btnAreaScreenshot">
+        <span class="bigicon">✂</span><b>Custom Area</b><small>Select &amp; crop</small>
+      </button>
+      <button class="tool compact-tool" id="btnFullPageScreenshot">
+        <span class="bigicon">📜</span><b>Full Page</b><small>Auto stitch</small>
+      </button>
+    </div>
+    
+    <div id="screenshotStatus" class="status-box" style="display:none;"></div>
+    
+    <div id="screenshotPreviewWrap" class="preview-card" style="display:none;">
+      <div class="preview-head"><b>Screenshot Preview</b><span id="screenshotDimensions"></span></div>
+      <div class="preview-img-box"><img id="screenshotPreviewImg" alt="Screenshot preview"></div>
+      <div class="quickrow" style="margin-top:8px;">
+        <button id="btnDownloadScreenshot" class="primary">Download PNG</button>
+        <button id="btnCopyScreenshot" class="widebtn">Copy Image</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Video Recording Card -->
+  <div class="card">
+    <div class="labelrow"><b>Screen Video Recorder</b><span>WebM HD</span></div>
+    
+    <div style="display:flex;flex-direction:column;gap:3px;margin-bottom:8px;">
+      <label class="checkbox-label"><input type="checkbox" id="recAudio" checked> Record Audio (Tab &amp; system audio)</label>
+      <label class="checkbox-label"><input type="checkbox" id="recMic"> Include Microphone</label>
+    </div>
+
+    <!-- Start button -->
+    <button id="btnStartRecording" class="primary widebtn rec-start-btn">
+      <span class="rec-dot"></span> Start Screen Recording
+    </button>
+
+    <!-- Active Recording Panel -->
+    <div id="activeRecControls" class="rec-panel" style="display:none;">
+      <div class="rec-info">
+        <span class="rec-live-badge">● RECORDING</span>
+        <span id="recTimer" class="rec-timer">00:00</span>
+      </div>
+      <div class="quickrow">
+        <button id="btnPauseRecording" class="widebtn">Pause</button>
+        <button id="btnStopRecording" class="primary">Stop &amp; Save</button>
+      </div>
+    </div>
+
+    <!-- Finished Recording Preview -->
+    <div id="recResultWrap" class="rec-result" style="display:none;margin-top:8px;">
+      <video id="recVideoPreview" controls style="width:100%;border-radius:9px;max-height:160px;background:#000;display:block;"></video>
+      <div class="quickrow" style="margin-top:8px;">
+        <button id="btnDownloadRecording" class="primary">Download Video</button>
+        <button id="btnNewRecording" class="widebtn">New Recording</button>
+      </div>
+    </div>
+
+    <div class="hint">💡 <b>Side Panel Tip:</b> To record smoothly across tabs without closing the popup, open NEXA in the Side Panel (top right icon).</div>
+  </div>
+</section>
+
+<!-- MEDIA & CONVERTER PAGE -->
+<section id="media" class="page">
+  <div class="section-title">Media &amp; Converter</div>
+
+  <div class="subtabs">
+    <button id="tabMediaExtract" class="subtab active">Page Media</button>
+    <button id="tabMediaConvert" class="subtab">Image Converter</button>
+  </div>
+
+  <!-- VIEW 1: PAGE MEDIA EXTRACTOR -->
+  <div id="mediaExtractView">
+    <div class="compact-card image-card">
+      <div class="imagebar">
+        <div><b id="imageCount">Ready to scan</b><small id="imageHint">Extract images, icons, favicons &amp; SVGs</small></div>
+        <button class="primary" id="scanImages">Scan</button>
+      </div>
+
+      <div class="filter-pills">
+        <button class="pill active" data-filter="all" id="filterAll">All <span id="countAll">(0)</span></button>
+        <button class="pill" data-filter="IMAGE" id="filterImages">Images <span id="countImages">(0)</span></button>
+        <button class="pill" data-filter="ICON" id="filterIcons">Icons <span id="countIcons">(0)</span></button>
+        <button class="pill" data-filter="SVG" id="filterSvgs">SVGs <span id="countSvgs">(0)</span></button>
+      </div>
+
+      <div class="media-toolbar">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+          <label class="checkbox-label"><input type="checkbox" id="filterTiny" checked> Hide tiny &lt; 30px</label>
+          <div class="view-toggle">
+            <button id="viewGrid" class="viewbtn active" title="Grid View">⊞ Grid</button>
+            <button id="viewList" class="viewbtn" title="List View">☰ List</button>
+          </div>
+        </div>
+
+        <div class="custom-name-row" style="margin-bottom:6px;">
+          <input type="text" id="customFileName" class="color-hex" placeholder="Custom filename prefix (optional)…" style="height:32px;font-size:11px;padding:0 10px;">
+        </div>
+
+        <div class="quickrow" style="margin-top:4px;">
+          <button id="selectAllMedia" class="widebtn">Select all</button>
+          <button id="deselectAllMedia" class="widebtn">Deselect</button>
+        </div>
+
+        <div class="imageactions" style="margin-top:6px;">
+          <button class="primary" id="downloadAllImages">Download all</button>
+          <button class="widebtn" id="downloadSelectedImages">Download selected</button>
+        </div>
+      </div>
+
+      <div id="imageList" class="imagelist grid-mode" style="margin-top:8px;"></div>
+    </div>
+  </div>
+
+  <!-- VIEW 2: IMAGE CONVERTER STUDIO -->
+  <div id="mediaConvertView" style="display:none;">
+    <div class="card">
+      <div class="labelrow"><b>Universal Image Converter</b><span>Offline</span></div>
+      <small style="color:rgb(130,130,130);margin-bottom:8px;display:block;">Convert between WEBP, PNG, JPG, ICO, and SVG without uploading to any server.</small>
+
+      <!-- Dropzone / File Picker / Paste -->
+      <div id="converterDropZone" class="qr-dropzone" style="padding:16px 10px;">
+        <span>📁 Drop image here, click to <b>browse file</b>, or press <b>Ctrl+V</b></span>
+        <input type="file" id="converterFileInput" accept="image/*" style="display:none;">
+      </div>
+
+      <!-- Converter Settings (shown when image loaded) -->
+      <div id="converterControls" style="display:none;margin-top:8px;">
+        <div class="conv-preview-card">
+          <div class="conv-thumb-wrap">
+            <img id="converterPreviewImg" alt="Image to convert">
+          </div>
+          <div class="conv-meta">
+            <b id="converterFileName">image.png</b>
+            <span id="converterOrigStats">Original: 1920×1080</span>
+          </div>
+        </div>
+
+        <!-- Target Format Selector -->
+        <div class="sub-title" style="margin-top:10px;margin-bottom:4px;">Convert To Target Format:</div>
+        <div class="format-grid">
+          <button class="format-btn active" data-target-format="png">PNG</button>
+          <button class="format-btn" data-target-format="jpeg">JPG</button>
+          <button class="format-btn" data-target-format="webp">WEBP</button>
+          <button class="format-btn" data-target-format="ico">ICO</button>
+          <button class="format-btn" data-target-format="svg">SVG</button>
+        </div>
+
+        <!-- Quality Slider (for JPG & WEBP) -->
+        <div id="convQualityWrap" class="card" style="margin-top:8px;padding:9px;display:none;">
+          <div class="labelrow"><b>Quality Compression</b><span id="convQualityValue">92%</span></div>
+          <input id="convQuality" type="range" min="10" max="100" value="92">
+        </div>
+
+        <!-- Resize Presets -->
+        <div class="sub-title" style="margin-top:10px;margin-bottom:4px;">Resolution Resize:</div>
+        <select id="convResize" style="width:100%;background:#0a0a0a;border:1px solid var(--line2);border-radius:8px;padding:7px;color:#fff;font-size:11px;">
+          <option value="original" selected>Original Resolution</option>
+          <option value="16">16 × 16 px (Favicon small)</option>
+          <option value="32">32 × 32 px (Favicon standard / ICO)</option>
+          <option value="48">48 × 48 px (Extension icon / ICO)</option>
+          <option value="64">64 × 64 px (Icon medium)</option>
+          <option value="128">128 × 128 px (App icon / ICO)</option>
+          <option value="256">256 × 256 px (Large icon / ICO)</option>
+          <option value="512">512 × 512 px (HD Icon)</option>
+        </select>
+
+        <div style="margin-top:12px;">
+          <div id="convResultInfo" style="font-size:11px;color:rgb(160,160,160);margin-bottom:6px;">Ready to convert</div>
+          <button id="btnDownloadConverted" class="primary widebtn" style="padding:11px;font-size:12px;font-weight:800;">
+            ⇩ Convert &amp; Download Image
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DISPLAY CONTROLS PAGE -->
 <section id="display" class="page">
-  <div class="section-title">Display</div>
+  <div class="section-title">Display &amp; Audio</div>
 
   <div class="card">
     <div class="labelrow"><b>Brightness</b><span id="brightValue">100%</span></div>
@@ -68,35 +268,37 @@
   <div class="display-actions"><button class="widebtn" id="resetDisplay">Reset</button><button class="primary" id="applyAllDisplay">Apply</button></div>
 </section>
 
-
-
+<!-- DEV TOOLS PAGE -->
 <section id="tools" class="page">
-  <div class="section-title">Tools</div>
+  <div class="section-title">Developer &amp; Text Tools</div>
   <div class="mini-grid">
     <button class="mini-tool" id="pageInfo"><span>ⓘ</span><b>Page Info</b><small>Inspect page details</small></button>
     <button class="mini-tool" id="source"><span>&lt;/&gt;</span><b>Source</b><small>Open page source</small></button>
+    <button class="mini-tool" id="pageStats"><span>📝</span><b>Text Stats</b><small>Word &amp; read time</small></button>
     <button class="mini-tool" id="jsonFormat"><span>{ }</span><b>JSON</b><small>Format JSON</small></button>
     <button class="mini-tool" id="urlDecode"><span>%</span><b>URL Decode</b><small>Decode text</small></button>
     <button class="mini-tool" id="base64"><span>64</span><b>Base64</b><small>Encode / decode</small></button>
-    <button class="mini-tool" id="copyPageDev"><span>⧉</span><b>Page Data</b><small>Copy title + URL</small></button>
   </div>
   <div class="compact-card">
-    <div class="devhead"><b>Developer</b><button id="clearDev" class="linkbtn">Clear</button></div>
+    <div class="devhead"><b>Developer Box</b><button id="clearDev" class="linkbtn">Clear</button></div>
     <textarea id="devBox" class="editor small" placeholder="Paste JSON, URL-encoded text, or normal text…"></textarea>
     <div class="actions"><button id="encode64">Base64 encode</button><button id="decode64">Base64 decode</button><button id="decodeUrl">URL decode</button><button id="formatJson">Format JSON</button></div>
   </div>
-  <div class="compact-card image-card">
-    <div class="imagebar"><div><b id="imageCount">Ready to scan</b><small id="imageHint">Find images on the current page</small></div><button class="primary" id="scanImages">Scan</button></div>
-    <div class="imageactions"><button class="widebtn" id="downloadAllImages">Download all</button><button class="widebtn" id="downloadSelectedImages">Download selected</button></div>
-    <div id="imageList" class="imagelist"></div>
-  </div>
 </section>
 
+<!-- QR STUDIO PAGE (Generator & Scanner) -->
 <section id="qr" class="page">
-  <div class="section-title">QR Code</div>
-  <div class="qr-card card">
+  <div class="section-title">QR Studio</div>
+
+  <div class="subtabs">
+    <button id="tabQrGen" class="subtab active">QR Generator</button>
+    <button id="tabQrScan" class="subtab">QR Scanner</button>
+  </div>
+
+  <!-- QR Generator View -->
+  <div id="qrGenView" class="qr-card card">
     <div class="qr-head">
-      <div><b>QR generator</b><small>Works offline. Nothing is uploaded.</small></div>
+      <div><b>Offline Generator</b><small>Works 100% offline.</small></div>
       <button id="qrFromPage" class="linkbtn">Current URL</button>
     </div>
     <textarea id="qrText" class="editor qr-input" placeholder="Enter text or paste a URL…"></textarea>
@@ -107,12 +309,69 @@
     <div class="qr-preview-wrap"><div id="qrPreview" class="qr-preview"><span>Enter text to generate</span></div></div>
     <div class="qr-actions"><button class="primary" id="generateQR">Generate</button><button class="widebtn" id="downloadQR">Download</button><button class="widebtn" id="copyQR">Copy</button></div>
   </div>
+
+  <!-- QR Scanner View -->
+  <div id="qrScanView" class="card" style="display:none;">
+    <div class="labelrow"><b>QR Code Scanner</b><span>Offline Multi-Scan</span></div>
+    
+    <div class="toolgrid" style="margin-bottom:9px;">
+      <button class="tool" id="scanScreenQR"><span class="bigicon">⛶</span><b>Scan Webpage</b><small>Detect QR on active tab</small></button>
+      <button class="tool" id="scanCameraQR"><span class="bigicon">📷</span><b>Camera Scan</b><small>Live camera viewfinder</small></button>
+    </div>
+
+    <!-- Dropzone / File Picker / Paste -->
+    <div id="qrDropZone" class="qr-dropzone">
+      <span>📁 Drop QR image here, click to <b>browse file</b>, or press <b>Ctrl+V</b> to paste</span>
+      <input type="file" id="qrFileInput" accept="image/*" style="display:none;">
+    </div>
+
+    <!-- Live Camera Viewfinder -->
+    <div id="cameraWrap" class="camera-wrap" style="display:none;">
+      <video id="cameraVideo" playsinline autoplay muted></video>
+      <div class="camera-laser"></div>
+      <button id="stopCamera" class="widebtn" style="margin:7px;">Stop Camera</button>
+    </div>
+
+    <!-- Scanned Result Box -->
+    <div id="qrScanResult" class="preview-card" style="display:none;">
+      <div class="labelrow"><b>Scanned Content</b><button id="clearScanResult" class="linkbtn">Clear</button></div>
+      <textarea id="qrResultText" readonly class="editor small" style="min-height:70px;"></textarea>
+      <div class="qr-actions" style="margin-top:8px;">
+        <button id="copyScannedQR" class="primary">Copy Text</button>
+        <button id="openScannedUrl" class="widebtn" style="display:none;">Open URL ↗</button>
+        <button id="sendToQrGen" class="widebtn">Generate QR</button>
+      </div>
+    </div>
+  </div>
 </section>
 
-
-
 </main>
-<footer>NEXA Tools · v7.3.0</footer>
+
+<!-- Full-Screen Image Preview Modal -->
+<div id="imagePreviewModal" class="modal-overlay" style="display:none;">
+  <div class="modal-card">
+    <div class="modal-header">
+      <div class="modal-title-wrap">
+        <b id="modalImageTitle">Image Preview</b>
+        <span id="modalImageDims">1920 × 1080 px</span>
+      </div>
+      <button id="closeImageModal" class="modal-close-btn">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-img-container">
+        <img id="modalPreviewImage" alt="Preview">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button id="modalBtnDownload" class="primary">Download</button>
+      <button id="modalBtnConvert" class="widebtn">Convert Format</button>
+      <button id="modalBtnCopy" class="widebtn">Copy Image</button>
+      <button id="modalBtnOpen" class="widebtn">Open Tab ↗</button>
+    </div>
+  </div>
+</div>
+
+<footer>NEXA Tools · v8.0.0</footer>
 <script src="qrcode-local.js"></script>
 <script src="popup.js"></script>
 </body>
